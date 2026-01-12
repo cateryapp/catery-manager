@@ -1,0 +1,73 @@
+{
+    "common": {
+        "save": "Save",
+        "cancel": "Cancel",
+        "loading": "Loading...",
+        "create": "Create",
+        "delete": "Delete",
+        "back": "Back"
+    },
+    "sidebar": {
+        "dashboard": "Dashboard",
+        "events": "Events",
+        "staff": "Staff",
+        "assignments": "Assignments",
+        "providers": "Providers",
+        "payroll": "Payroll",
+        "settings": "Settings"
+    },
+    "events": {
+        "title": "Events",
+        "subtitle": "Manage your upcoming catering operations.",
+        "create_button": "Create Event",
+        "no_events": "No events found. Create your first one.",
+        "status": {
+            "draft": "Draft",
+            "confirmed": "Confirmed",
+            "done": "Done",
+            "cancelled": "Cancelled"
+        },
+        "form": {
+            "title": "New Event",
+            "subtitle": "Schedule a new operation.",
+            "name_label": "Event Name",
+            "location_label": "Location",
+            "guests_label": "Estimated Guests",
+            "date_label": "Date (Required)",
+            "start_time_label": "Start Time (Optional)",
+            "end_time_label": "End Time (Optional)",
+            "submit": "Create Event"
+        },
+        "tabs": {
+            "plan": "Plan",
+            "doc": "Doc",
+            "staff": "Staff",
+            "finance": "Finance"
+        },
+        "timeline": {
+            "title": "Timeline",
+            "subtitle": "Plan the sequence of moments.",
+            "add_moment": "Add Moment",
+            "empty": "No moments added yet. Start planning!"
+        },
+        "doc": {
+            "title": "Event Notes",
+            "subtitle": "Operational details, meeting minutes, and flexible requirements."
+        }
+    },
+    "settings": {
+        "title": "Settings",
+        "subtitle": "Manage your workspace and personal preferences.",
+        "profile": {
+            "title": "My Profile",
+            "language_label": "Language Preference"
+        },
+        "workspace": {
+            "title": "Workspace Information",
+            "company_name": "Company Name",
+            "team_title": "Team Members",
+            "team_subtitle": "Users with access to this workspace.",
+            "invite_button": "Invite Member"
+        }
+    }
+}

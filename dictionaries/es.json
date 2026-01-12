@@ -1,0 +1,73 @@
+{
+    "common": {
+        "save": "Guardar",
+        "cancel": "Cancelar",
+        "loading": "Cargando...",
+        "create": "Crear",
+        "delete": "Eliminar",
+        "back": "Volver"
+    },
+    "sidebar": {
+        "dashboard": "Panel",
+        "events": "Eventos",
+        "staff": "Personal",
+        "assignments": "Asignaciones",
+        "providers": "Proveedores",
+        "payroll": "Nóminas",
+        "settings": "Configuración"
+    },
+    "events": {
+        "title": "Eventos",
+        "subtitle": "Gestiona tus próximas operaciones de catering.",
+        "create_button": "Crear Evento",
+        "no_events": "No se encontraron eventos. Crea el primero.",
+        "status": {
+            "draft": "Borrador",
+            "confirmed": "Confirmado",
+            "done": "Realizado",
+            "cancelled": "Cancelado"
+        },
+        "form": {
+            "title": "Nuevo Evento",
+            "subtitle": "Programa una nueva operación.",
+            "name_label": "Nombre del Evento",
+            "location_label": "Ubicación",
+            "guests_label": "Invitados Estimados",
+            "date_label": "Fecha (Obligatorio)",
+            "start_time_label": "Hora Inicio (Opcional)",
+            "end_time_label": "Hora Fin (Opcional)",
+            "submit": "Crear Evento"
+        },
+        "tabs": {
+            "plan": "Plan",
+            "doc": "Doc",
+            "staff": "Personal",
+            "finance": "Finanzas"
+        },
+        "timeline": {
+            "title": "Cronograma",
+            "subtitle": "Planifica la secuencia de momentos.",
+            "add_moment": "Añadir Momento",
+            "empty": "No hay momentos añadidos. ¡Empieza a planificar!"
+        },
+        "doc": {
+            "title": "Notas del Evento",
+            "subtitle": "Detalles operativos, actas de reuniones y requisitos flexibles."
+        }
+    },
+    "settings": {
+        "title": "Configuración",
+        "subtitle": "Gestiona tu espacio de trabajo y preferencias personales.",
+        "profile": {
+            "title": "Mi Perfil",
+            "language_label": "Preferencia de Idioma"
+        },
+        "workspace": {
+            "title": "Información del Espacio de Trabajo",
+            "company_name": "Nombre de la Empresa",
+            "team_title": "Miembros del Equipo",
+            "team_subtitle": "Usuarios con acceso a este espacio de trabajo.",
+            "invite_button": "Invitar Miembro"
+        }
+    }
+}
