@@ -8,13 +8,18 @@
         "back": "Back"
     },
     "sidebar": {
-        "dashboard": "Dashboard",
+        "dashboard": "Home",
         "events": "Events",
         "staff": "Staff",
         "assignments": "Assignments",
         "providers": "Providers",
         "payroll": "Payroll",
-        "settings": "Settings"
+        "settings": "Settings",
+        "section": {
+            "events": "Event Management",
+            "staff": "Staff Management",
+            "resources": "Resources"
+        }
     },
     "events": {
         "title": "Events",

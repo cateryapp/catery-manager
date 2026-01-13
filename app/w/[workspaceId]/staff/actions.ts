@@ -33,6 +33,72 @@ export async function createStaff(formData: FormData, workspaceId: string) {
     return { success: true }
 }
 
+export async function updateStaff(formData: FormData, workspaceId: string, staffId: string) {
+    const supabase = await createClient()
+
+    const firstName = formData.get('firstName') as string
+    const lastName = formData.get('lastName') as string
+    const email = formData.get('email') as string
+    const phone = formData.get('phone') as string
+    const role = formData.get('role') as string
+
+    const { error } = await supabase
+        .from('staff')
+        .update({
+            first_name: firstName,
+            last_name: lastName,
+            email,
+            phone,
+            attributes: { role }
+        })
+        .eq('id', staffId)
+        .eq('workspace_id', workspaceId)
+
+    if (error) {
+        return { error: error.message }
+    }
+
+    revalidatePath(`/w/${workspaceId}/staff`)
+    revalidatePath(`/w/${workspaceId}/staff/${staffId}`)
+    return { success: true }
+}
+
+export async function seedStaff(workspaceId: string) {
+    const supabase = await createClient()
+
+    // Verify user is in workspace
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return { error: 'Unauthorized' }
+
+    const ROLES = ['waiter', 'chef', 'coordinator', 'cleaner']
+    const NAMES = ['Alex', 'Jordan', 'Taylor', 'Casey', 'Morgan', 'Jamie', 'Charlie', 'Quinn', 'Sam', 'Riley', 'Avery', 'Peyton']
+    const SURNAMES = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez']
+
+    const staffData = []
+
+    for (let i = 0; i < 100; i++) {
+        const firstName = NAMES[Math.floor(Math.random() * NAMES.length)]
+        const lastName = SURNAMES[Math.floor(Math.random() * SURNAMES.length)]
+        const role = ROLES[Math.floor(Math.random() * ROLES.length)]
+
+        staffData.push({
+            workspace_id: workspaceId,
+            first_name: firstName,
+            last_name: lastName,
+            email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}${i}@example.com`,
+            phone: `+34 600 ${String(i).padStart(6, '0')}`,
+            attributes: { role }
+        })
+    }
+
+    const { error } = await supabase.from('staff').insert(staffData)
+
+    if (error) return { error: error.message }
+
+    revalidatePath(`/w/${workspaceId}/staff`)
+    return { success: true }
+}
+
 export async function generateStaffInvitation(workspaceId: string, staffId: string) {
     const supabase = await createClient()
 

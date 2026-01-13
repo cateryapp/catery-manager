@@ -2,6 +2,55 @@
 
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
+import { revalidatePath } from 'next/cache'
+import { addDays, setHours, setMinutes } from 'date-fns'
+
+export async function seedEvents(workspaceId: string) {
+    const supabase = await createClient()
+    const events = []
+    const now = new Date()
+
+    const eventTypes = [
+        { name: 'Wedding', requirements: { waiter: 6, chef: 3, cleaning: 2 }, guests: 120 },
+        { name: 'Corporate Dinner', requirements: { waiter: 4, chef: 2 }, guests: 50 },
+        { name: 'Birthday Party', requirements: { waiter: 3, chef: 1, cleaning: 1 }, guests: 40 },
+        { name: 'Tech Conference', requirements: { waiter: 8, chef: 4, coordinator: 2 }, guests: 200 }
+    ]
+
+    for (let i = 0; i < 14; i++) {
+        // Create 2 events per day
+        for (let j = 0; j < 2; j++) {
+            const date = addDays(now, i)
+            const type = eventTypes[Math.floor(Math.random() * eventTypes.length)]
+
+            // Random start time between 10am and 6pm
+            const startHour = 10 + Math.floor(Math.random() * 8)
+            const startAt = setHours(setMinutes(date, 0), startHour)
+            const endAt = setHours(setMinutes(date, 0), startHour + 4)
+
+            events.push({
+                workspace_id: workspaceId,
+                name: `${type.name} - ${i + 1}`,
+                location: `Venue ${String.fromCharCode(65 + Math.floor(Math.random() * 5))}`,
+                start_at: startAt.toISOString(),
+                end_at: endAt.toISOString(),
+                status: 'confirmed',
+                estimated_guests: type.guests + Math.floor(Math.random() * 20),
+                staffing_requirements: type.requirements
+            })
+        }
+    }
+
+    const { error } = await supabase.from('events').insert(events)
+
+    if (error) {
+        console.error('Seed error:', error)
+        throw new Error('Failed to seed events')
+    }
+
+    revalidatePath(`/w/${workspaceId}/events`)
+    return { success: true }
+}
 
 export async function createEvent(formData: FormData, workspaceId: string) {
     const supabase = await createClient()

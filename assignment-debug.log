@@ -1,0 +1,24 @@
+
+[2026-01-13T13:42:31.356Z] Start Assign: staff=832c83ee-e97a-4d94-9629-f2b85020f19e role=waiter events=["9b0a5c21-247c-4846-8fd9-a5633fec7285"] ws=e439c067-f901-4d76-b58b-f4fac7119a1f
+[2026-01-13T13:42:31.410Z] Start Assign: staff=02948037-404d-4f34-99e6-7c30e79f940f role=coordinator events=["9b0a5c21-247c-4846-8fd9-a5633fec7285"] ws=e439c067-f901-4d76-b58b-f4fac7119a1f
+[2026-01-13T13:44:16.345Z] Start Assign: staff=832c83ee-e97a-4d94-9629-f2b85020f19e role=waiter events=["10bf06a9-ac36-4b9d-b41e-063704960262"] ws=e439c067-f901-4d76-b58b-f4fac7119a1f
+[2026-01-13T13:44:16.354Z] Check Result: found=false error={"code":"PGRST116","details":"The result contains 0 rows","hint":null,"message":"Cannot coerce the result to a single JSON object"}
+[2026-01-13T13:44:16.361Z] Insert Result: error=null
+[2026-01-13T13:44:16.383Z] Start Assign: staff=02948037-404d-4f34-99e6-7c30e79f940f role=coordinator events=["10bf06a9-ac36-4b9d-b41e-063704960262"] ws=e439c067-f901-4d76-b58b-f4fac7119a1f
+[2026-01-13T13:44:16.387Z] Check Result: found=false error={"code":"PGRST116","details":"The result contains 0 rows","hint":null,"message":"Cannot coerce the result to a single JSON object"}
+[2026-01-13T13:44:16.391Z] Insert Result: error=null
+[2026-01-13T13:44:16.421Z] Start Assign: staff=a6307701-150a-4cf0-a515-e508fded2dd1 role=chef events=["10bf06a9-ac36-4b9d-b41e-063704960262"] ws=e439c067-f901-4d76-b58b-f4fac7119a1f
+[2026-01-13T13:44:16.426Z] Check Result: found=false error={"code":"PGRST116","details":"The result contains 0 rows","hint":null,"message":"Cannot coerce the result to a single JSON object"}
+[2026-01-13T13:44:16.431Z] Insert Result: error=null
+[2026-01-13T13:45:07.757Z] Read Assignments: event=10bf06a9-ac36-4b9d-b41e-063704960262 count=undefined
+[2026-01-13T13:45:13.036Z] Read Assignments: event=e964b963-15c4-42d2-8840-72fa2f5b3995 count=undefined
+[2026-01-13T13:45:17.297Z] Start Assign: staff=181b3762-c00a-44b0-bc67-a0c1d03292b8 role=coordinator events=["e964b963-15c4-42d2-8840-72fa2f5b3995"] ws=e439c067-f901-4d76-b58b-f4fac7119a1f
+[2026-01-13T13:45:17.305Z] Check Result: found=false error={"code":"PGRST116","details":"The result contains 0 rows","hint":null,"message":"Cannot coerce the result to a single JSON object"}
+[2026-01-13T13:45:17.311Z] Insert Result: error=null
+[2026-01-13T13:45:17.338Z] Start Assign: staff=82f855e9-e2d6-4c5a-9974-21546fac6b50 role=waiter events=["e964b963-15c4-42d2-8840-72fa2f5b3995"] ws=e439c067-f901-4d76-b58b-f4fac7119a1f
+[2026-01-13T13:45:17.342Z] Check Result: found=false error={"code":"PGRST116","details":"The result contains 0 rows","hint":null,"message":"Cannot coerce the result to a single JSON object"}
+[2026-01-13T13:45:17.345Z] Insert Result: error=null
+[2026-01-13T13:45:17.412Z] Read Assignments: event=e964b963-15c4-42d2-8840-72fa2f5b3995 count=undefined
+[2026-01-13T13:45:34.348Z] Read Assignments: event=9841aca7-6921-44c6-a38a-e432a2ba8160 count=undefined
+[2026-01-13T13:46:26.100Z] Read Assignments: event=b7690882-cdc7-499f-b06e-b92d64db7a1e count=undefined error={"code":"42703","details":null,"hint":null,"message":"column assignments.is_available does not exist"}
+[2026-01-13T13:46:32.802Z] Read Assignments: event=9841aca7-6921-44c6-a38a-e432a2ba8160 count=undefined error={"code":"42703","details":null,"hint":null,"message":"column assignments.is_available does not exist"}

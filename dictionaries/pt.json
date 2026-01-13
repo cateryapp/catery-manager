@@ -8,13 +8,18 @@
         "back": "Voltar"
     },
     "sidebar": {
-        "dashboard": "Painel",
+        "dashboard": "Início",
         "events": "Eventos",
         "staff": "Equipe",
         "assignments": "Atribuições",
         "providers": "Fornecedores",
         "payroll": "Folha de Pagamento",
-        "settings": "Configurações"
+        "settings": "Configurações",
+        "section": {
+            "events": "Gestão de Eventos",
+            "staff": "Gestão de Equipe",
+            "resources": "Gestão de Recursos"
+        }
     },
     "events": {
         "title": "Eventos",
