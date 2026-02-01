@@ -4,7 +4,6 @@ import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
 import { updateEventDoc } from './actions'
-import { useDebouncedCallback } from 'use-debounce' // Need to install or implement debounce
 import { useState, useEffect } from 'react'
 import { Check, Loader2 } from 'lucide-react'
 

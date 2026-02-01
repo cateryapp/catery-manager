@@ -46,6 +46,10 @@ export function Sidebar({ workspaceId, userEmail, workspaceName }: { workspaceId
         { name: t('sidebar.settings'), href: `/w/${workspaceId}/settings`, icon: Settings },
     ]
 
+    const catalogNav = [
+        { name: t('sidebar.catalog'), href: `/w/${workspaceId}/catalog`, icon: Package },
+    ]
+
     const renderNavGroup = (title: string | null, items: any[]) => (
         <div className="mb-4">
             {title && (
@@ -85,6 +89,7 @@ export function Sidebar({ workspaceId, userEmail, workspaceName }: { workspaceId
             <nav className="flex-1 px-3 overflow-y-auto no-scrollbar">
                 {renderNavGroup(null, mainNav)}
                 {renderNavGroup(t('sidebar.section.events') || 'Eventos', eventsNav)}
+                {renderNavGroup(t('sidebar.catalog') || 'Catálogo', catalogNav)}
                 {renderNavGroup(t('sidebar.section.staff') || 'Personal', staffNav)}
                 {renderNavGroup(t('sidebar.section.resources') || 'Recursos', resourcesNav)}
 

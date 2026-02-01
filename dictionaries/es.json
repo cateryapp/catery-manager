@@ -15,6 +15,7 @@
         "providers": "Proveedores",
         "payroll": "Nóminas",
         "settings": "Configuración",
+        "catalog": "Catálogo",
         "section": {
             "events": "Gestión de Eventos",
             "staff": "Gestión de Personal",

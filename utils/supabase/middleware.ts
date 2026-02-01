@@ -30,7 +30,31 @@ export async function updateSession(request: NextRequest) {
     )
 
     // Do not run Supabase code during static generation
-    // const user = await supabase.auth.getUser()
+    // CONSTANTLY refreshing the session to ensure the server component has a valid session
+    try {
+        const { error } = await supabase.auth.getUser()
+
+        if (error) {
+            // Only clear cookies if it's strictly a session issue
+            if (error.code === 'refresh_token_not_found' || error.status === 400) {
+                // Clear all Supabase cookies to force re-login
+                const cookiesToClear = request.cookies.getAll().filter(c => c.name.startsWith('sb-'))
+                cookiesToClear.forEach(c => {
+                    request.cookies.delete(c.name)
+                    supabaseResponse.cookies.delete(c.name)
+                })
+            }
+        }
+    } catch (e) {
+        // Catch any unexpected errors to prevent crashing
+        console.error("Middleware Auth Exception:", e)
+        // Force clear cookies on exception too
+        const cookiesToClear = request.cookies.getAll().filter(c => c.name.startsWith('sb-'))
+        cookiesToClear.forEach(c => {
+            request.cookies.delete(c.name)
+            supabaseResponse.cookies.delete(c.name)
+        })
+    }
 
     // protected routes logic can go here later
     return supabaseResponse

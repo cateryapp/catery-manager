@@ -90,12 +90,12 @@ export function EventsCalendar({
                         const newEventUrl = `/w/${workspaceId}/events/new?date=${format(day, 'yyyy-MM-dd')}`
 
                         return (
-                            <Link
-                                href={newEventUrl}
+                            <div
                                 key={day.toISOString()}
+                                onClick={() => router.push(newEventUrl)}
                                 className={`
                                     relative p-2 border-b border-r border-border last:border-r-0 
-                                    hover:bg-secondary/20 transition-colors group
+                                    hover:bg-secondary/20 transition-colors group cursor-pointer
                                     ${!isCurrentMonth ? 'bg-secondary/10 text-muted-foreground/50' : ''}
                                     ${isToday ? 'bg-primary/5' : ''}
                                 `}
@@ -118,7 +118,7 @@ export function EventsCalendar({
                                         <Link
                                             key={event.id}
                                             href={`/w/${workspaceId}/events/${event.id}`}
-                                            onClick={(e) => e.stopPropagation()} // Prevent triggering parent Link
+                                            onClick={(e) => e.stopPropagation()} // Prevent triggering parent click
                                             className="block text-xs truncate px-2 py-1 rounded-md bg-secondary/80 border border-transparent hover:border-primary/50 hover:bg-secondary text-foreground"
                                         >
                                             <span className={`w-1.5 h-1.5 inline-block rounded-full mr-1.5 ${event.status === 'confirmed' ? 'bg-green-500' :
@@ -128,7 +128,7 @@ export function EventsCalendar({
                                         </Link>
                                     ))}
                                 </div>
-                            </Link>
+                            </div>
                         )
                     })}
                 </div>

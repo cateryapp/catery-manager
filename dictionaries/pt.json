@@ -15,6 +15,7 @@
         "providers": "Fornecedores",
         "payroll": "Folha de Pagamento",
         "settings": "Configurações",
+        "catalog": "Catálogo",
         "section": {
             "events": "Gestão de Eventos",
             "staff": "Gestão de Equipe",

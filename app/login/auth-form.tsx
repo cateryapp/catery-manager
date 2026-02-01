@@ -19,15 +19,23 @@ export default function AuthForm() {
         try {
             if (isLogin) {
                 const res = await login(formData)
-                if (res?.error) setError(res.error)
+                if (res?.error) {
+                    setError(res.error)
+                    setLoading(false)
+                }
+                // Success redirects, so we don't setLoading(false) here to prevent UI flicker
             } else {
                 const res = await signup(formData)
                 if (res?.error) setError(res.error)
                 else if (res?.success) setMessage(res.message)
+                setLoading(false)
             }
         } catch (e: any) {
+            if (e.message?.includes('NEXT_REDIRECT')) {
+                // Redirecting, keep loading...
+                return
+            }
             setError(e.message || 'Something went wrong')
-        } finally {
             setLoading(false)
         }
     }

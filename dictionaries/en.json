@@ -15,6 +15,7 @@
         "providers": "Providers",
         "payroll": "Payroll",
         "settings": "Settings",
+        "catalog": "Catalog",
         "section": {
             "events": "Event Management",
             "staff": "Staff Management",
