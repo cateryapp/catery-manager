@@ -1,0 +1,209 @@
+asyncapi: 2.6.0
+info:
+  title: Catery Platform Events
+  version: 1.0.0
+  description: |
+    Event-driven architecture for the Catery Platform.
+    Describes domain events, integration triggers, and webhook deliveries.
+
+servers:
+  production:
+    url: wss://realtime.catery.io
+    protocol: wss
+    description: Supabase Realtime / Event Bus
+
+channels:
+  # --- DOMAIN EVENTS ---
+  event.created:
+    publish:
+      message:
+        $ref: '#/components/messages/EventCreated'
+  
+  event.updated:
+    subscribe:
+      message:
+        $ref: '#/components/messages/EventUpdated'
+
+  phase.updated:
+    subscribe:
+      message:
+        $ref: '#/components/messages/PhaseUpdated'
+
+  product.assigned:
+    description: Emitted when a product is assigned to an event phase.
+    subscribe:
+      message:
+        $ref: '#/components/messages/ProductAssigned'
+
+  decision.recorded:
+    description: Emitted when a user makes a key decision (e.g. approving a quote).
+    subscribe:
+      message:
+        $ref: '#/components/messages/DecisionRecorded'
+
+  # --- INTEGRATIONS ---
+  integration.requested:
+    description: Internal command to request an external integration sync.
+    publish:
+      message:
+        $ref: '#/components/messages/IntegrationRequested'
+
+  integration.completed:
+    subscribe:
+      message:
+        $ref: '#/components/messages/IntegrationCompleted'
+  
+  integration.failed:
+    subscribe:
+      message:
+        $ref: '#/components/messages/IntegrationFailed'
+
+  # --- WEBHOOKS ---
+  webhook.delivery:
+    description: Event emitted when a webhook is attempting delivery.
+    subscribe:
+      message:
+        $ref: '#/components/messages/WebhookDelivery'
+
+  webhook.failed:
+    subscribe:
+      message:
+        $ref: '#/components/messages/WebhookFailed'
+
+components:
+  schemas:
+    # Reusable Base Event
+    BaseEvent:
+      type: object
+      properties:
+        eventId:
+          type: string
+          format: uuid
+        timestamp:
+          type: string
+          format: date-time
+        workspaceId:
+          type: string
+          format: uuid
+        correlationId:
+          type: string
+          format: uuid
+        actor:
+          type: object
+          properties:
+            userId: { type: string }
+            role: { type: string }
+
+  messages:
+    EventCreated:
+      name: EventCreated
+      title: Event Created
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/BaseEvent'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  name: { type: string }
+                  startAt: { type: string }
+
+    EventUpdated:
+      name: EventUpdated
+      title: Event Updated
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/BaseEvent'
+          - type: object
+            properties:
+              data:
+                type: object
+                description: Changed fields
+
+    PhaseUpdated:
+      name: PhaseUpdated
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/BaseEvent'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  phaseId: { type: string }
+                  status: { type: string }
+
+    ProductAssigned:
+      name: ProductAssigned
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/BaseEvent'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  productId: { type: string }
+                  quantity: { type: number }
+
+    DecisionRecorded:
+      name: DecisionRecorded
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/BaseEvent'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  decisionParams: { type: object }
+    
+    IntegrationRequested:
+      name: IntegrationRequested
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/BaseEvent'
+          - type: object
+            properties:
+              targetSystem: { type: string }
+              payload: { type: object }
+
+    IntegrationCompleted:
+      name: IntegrationCompleted
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/BaseEvent'
+          - type: object
+            properties:
+              result: { type: object }
+
+    IntegrationFailed:
+      name: IntegrationFailed
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/BaseEvent'
+          - type: object
+            properties:
+              error: { type: string }
+              retryCount: { type: integer }
+
+    WebhookDelivery:
+      name: WebhookDelivery
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/BaseEvent'
+          - type: object
+            properties:
+              targetUrl: { type: string }
+              attempt: { type: integer }
+
+    WebhookFailed:
+      name: WebhookFailed
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/BaseEvent'
+          - type: object
+            properties:
+              statusCode: { type: integer }
+              responseBody: { type: string }

@@ -1,0 +1,184 @@
+openapi: 3.1.0
+info:
+  title: Catery Platform API
+  version: 1.0.0
+  description: |
+    Synchronous HTTP API for the Catery Platform.
+    Includes REST endpoints and logical RPC mappings for Server Actions.
+servers:
+  - url: https://api.catery.io/v1
+    description: Production Server
+  - url: http://localhost:3000
+    description: Local Development
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Human readable error message
+        code:
+          type: string
+          description: Machine readable error code
+    
+    # Auth
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+    
+    # Catalogue
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        sku:
+          type: string
+        product_type:
+          type: string
+          enum: [single, bundle, service]
+        base_price:
+          type: number
+    
+    # Events
+    Event:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        start_at:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum: [draft, confirmed, done, cancelled]
+
+tags:
+  - name: auth
+  - name: workspaces
+  - name: events
+  - name: catalog
+  - name: staff
+  - name: integrations
+
+paths:
+  # --- AUTH ---
+  /actions/auth/login:
+    post:
+      tags: [auth]
+      summary: Login user
+      description: Authenticates user using email/password. (Server Action wrapper)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        200:
+          description: Authentication successful (Session Cookie / Token)
+        401:
+          description: Invalid credentials
+
+  # --- EVENTS ---
+  /actions/workspaces/{workspaceId}/events:
+    post:
+      tags: [events]
+      summary: Create Event
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: workspaceId
+          in: path
+          required: true
+          schema: 
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: { type: string }
+                date: { type: string, format: date }
+                guestCount: { type: integer }
+      responses:
+        201:
+          description: Event created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+
+  # --- CATALOG ---
+  /actions/workspaces/{workspaceId}/products:
+    get:
+      tags: [catalog]
+      summary: List Products
+      parameters:
+        - name: workspaceId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        200:
+          description: List of products
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/Product'
+
+  # --- INTEGRATIONS ---
+  /api/invitations/accept:
+    post:
+      tags: [integrations, staff]
+      summary: Accept Staff Invitation
+      description: Validates an invitation token and links the authenticated user to a staff profile.
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [token]
+              properties:
+                token:
+                  type: string
+                  description: The secure random token from the invitation email/link.
+                userId:
+                  type: string
+                  description: Optional override for user ID (if not using Auth header).
+      responses:
+        200:
+          description: Invitation accepted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  workspaceId: { type: string, format: uuid }
+        400:
+          description: Invalid or expired token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
